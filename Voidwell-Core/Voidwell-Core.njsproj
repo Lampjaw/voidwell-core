@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>Voidwell-Core</Name>
+    <RootNamespace>Voidwell-Core</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>7e199318-68ed-4e18-8db8-04c9450ad6b9</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>index.js</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ProjectFiles</ProjectView>
+    <StartWebBrowser>false</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="census\services\facilityLink.js" />
+    <Compile Include="census\services\faction.js" />
+    <Compile Include="census\services\item.js" />
+    <Compile Include="census\services\itemCategory.js" />
+    <Compile Include="census\services\map.js" />
+    <Compile Include="census\services\mapHex.js" />
+    <Compile Include="census\services\mapRegion.js" />
+    <Compile Include="census\services\outfit.js" />
+    <Compile Include="census\services\profile.js" />
+    <Compile Include="census\services\title.js" />
+    <Compile Include="census\services\vehicle.js" />
+    <Compile Include="census\services\world.js" />
+    <Compile Include="census\services\zone.js" />
+    <Compile Include="config.js">
+      <Publish>True</Publish>
+    </Compile>
+    <Compile Include="models\CharacterTime.js" />
+    <Compile Include="models\FacilityLink.js" />
+    <Compile Include="models\Faction.js" />
+    <Compile Include="models\Item.js" />
+    <Compile Include="models\ItemCategory.js" />
+    <Compile Include="models\MapHex.js" />
+    <Compile Include="models\MapRegion.js" />
+    <Compile Include="models\Outfit.js" />
+    <Compile Include="models\OutfitMember.js" />
+    <Compile Include="models\Profile.js" />
+    <Compile Include="models\Title.js" />
+    <Compile Include="models\UpdateHistory.js" />
+    <Compile Include="models\VehicleFaction.js" />
+    <Compile Include="models\Vehicle.js" />
+    <Compile Include="models\World.js" />
+    <Compile Include="models\Zone.js" />
+    <Compile Include="index.js" />
+    <Compile Include="census\index.js" />
+    <Compile Include="census\services\character.js" />
+    <Compile Include="models\index.js" />
+    <Compile Include="models\CharacterIviStat.js" />
+    <Compile Include="models\Character.js" />
+    <Compile Include="models\CharacterWeaponStatByFaction.js" />
+    <Compile Include="models\CharacterWeaponStat.js" />
+    <Compile Include="models\CharacterStatByFaction.js" />
+    <Compile Include="models\CharacterStat.js" />
+    <Compile Include="services\character.js" />
+    <Compile Include="services\faction.js" />
+    <Compile Include="services\item.js" />
+    <Compile Include="services\map.js" />
+    <Compile Include="services\outfit.js" />
+    <Compile Include="services\profile.js" />
+    <Compile Include="services\title.js" />
+    <Compile Include="services\vehicle.js" />
+    <Compile Include="services\weapon.js" />
+    <Compile Include="services\world.js" />
+    <Compile Include="services\zone.js" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="census\services\" />
+    <Folder Include="models\" />
+    <Folder Include="census\" />
+    <Folder Include="services\" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+</Project>
