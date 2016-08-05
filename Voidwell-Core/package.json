@@ -10,7 +10,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "body-parser": "^1.15.2",
-    "dbgcensus": "^1.0.0",
+    "dbgcensus": "^1.0.1",
     "express": "^4.14.0",
     "fs": "0.0.2",
     "mysql": "^2.10.2",
