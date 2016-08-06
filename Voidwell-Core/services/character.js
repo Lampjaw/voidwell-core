@@ -166,7 +166,7 @@ module.exports.getCharacterOutfitMembershipById = function (characterId, callbac
 module.exports.getCharacterFullById = function (characterId, callback) {
     getCharacterFullById(characterId, function (error, data) {
         if (error) {
-            console.log(error);
+            return console.log(error);
         }
         callback(error, data ? data.toJSON() : null);
     });

@@ -4,11 +4,11 @@ var requireDir = require('require-dir');
 
 var db = require('./models');
 var config = require('./config');
+require('./rediscache');
 
 db.init(config.schema, config.username, config.password, config.host, function (error) {
     if (error) {
-        console.log(error);
-        return;
+        return console.log(error);
     }
     console.log('[SERVER] Voidwell-Core initialized');
 });
