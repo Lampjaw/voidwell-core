@@ -271,10 +271,12 @@ function updateCharacterById (characterId, callback) {
             certsEarned: data.certs.earned_points,
             titleId: data.title_id
         }).then(function () {
-            db.Character.findById(characterId).then(function (character) {
-                callback(null, character);
-            }).catch(function (error) {
-                callback(error);
+            updateCharacterOutfitMembershipById(characterId, function () {
+                db.Character.findById(characterId).then(function (character) {
+                    callback(null, character);
+                }).catch(function (error) {
+                    callback(error);
+                });
             });
         }).catch(function (error) {
             callback(error);
