@@ -12,7 +12,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7e199318-68ed-4e18-8db8-04c9450ad6b9</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>index.js</StartupFile>
+    <StartupFile>app.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -62,7 +62,7 @@
     <Compile Include="models\Vehicle.js" />
     <Compile Include="models\World.js" />
     <Compile Include="models\Zone.js" />
-    <Compile Include="index.js" />
+    <Compile Include="app.js" />
     <Compile Include="census\index.js" />
     <Compile Include="census\services\character.js" />
     <Compile Include="models\index.js" />
@@ -72,6 +72,7 @@
     <Compile Include="models\CharacterWeaponStat.js" />
     <Compile Include="models\CharacterStatByFaction.js" />
     <Compile Include="models\CharacterStat.js" />
+    <Compile Include="rediscache.js" />
     <Compile Include="services\character.js" />
     <Compile Include="services\faction.js" />
     <Compile Include="services\item.js" />
