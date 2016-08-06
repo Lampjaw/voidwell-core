@@ -34,7 +34,8 @@ module.exports = function (sequelize, DataTypes) {
             associate: function (models) {                
                 Vehicle.hasMany(models.VehicleFaction, {
                     constraints: false,
-                    foreignKey: 'vehicleId'
+                    foreignKey: 'vehicleId',
+                    as: 'faction'
                 });
             }
         }

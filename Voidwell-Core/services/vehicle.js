@@ -20,10 +20,20 @@ db.UpdateHistory.findById('vehicle').then(function (record) {
 module.exports.refresh = refresh;
 
 module.exports.getAllVehicles = function (callback) {
-    db.Vehicle.findAll({ include: db.VehicleFaction })
+    var options = {
+        include: {
+            model: db.VehicleFaction,
+            as: 'faction'
+        }
+    };
+
+    db.Vehicle.findAll(options)
         .then(function (data) {
             var jsonData = data.map(function (d) {
-                return d.toJSON();
+                var jData = d.toJSON();
+                jData.factions = jData.faction.map(function (f) { return f.factionId});
+                delete jData.faction;
+                return jData;
             });
         
             callback(null, jsonData);
