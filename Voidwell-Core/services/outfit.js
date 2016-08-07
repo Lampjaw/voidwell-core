@@ -202,8 +202,8 @@ function updateOutfitById(outfitId, callback) {
                 createdDate: createDateAsUTC(new Date(data.time_created_date)),
                 leaderCharacterId: data.leader_character_id,
                 memberCount: data.member_count,
-                factionId: leaderCharacter.factionId,
-                worldId: leaderCharacter.worldId
+                factionId: leaderCharacter.faction_id,
+                worldId: leaderCharacter.world_id
             }).then(function () {
                 db.Outfit.findById(outfitId).then(function (outfit) {
                     callback(null, outfit);
