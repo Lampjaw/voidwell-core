@@ -1,8 +1,8 @@
 ﻿var async = require('async');
 
+var redis = require('./../rediscache');
 var census = require('./../census');
 var db = require('./../models').models;
-
 var outfitService = require('./outfit');
 
 module.exports.lookupCharactersByName = function (query, limit, callback) {
@@ -41,128 +41,6 @@ module.exports.getCharacterById = function (characterId, callback) {
     });
 };
 
-module.exports.getCharacterStatsById = function (characterId, callback) {
-    getCharacterById(characterId, function (error, character) {
-        if (error) {
-            return callback(error);
-        }
-
-        if (!character) {
-            return callback(null);
-        }
-        
-        character.getCharacterStats().then(function (characterStats) {
-            if (characterStats && characterStats.length > 0) {
-                var results = characterStats.map(function (d) {
-                    return d.toJSON();
-                });
-                return callback(null, results);
-            }
-
-            updateCharacterStatsById(characterId, null, callback);
-        }).catch(function (error) {
-            callback(error);
-        });
-    });
-};
-
-module.exports.getCharacterFactionStatsById = function (characterId, callback) {
-    getCharacterById(characterId, function (error, character) {
-        if (error) {
-            return callback(error);
-        }
-        
-        if (!character) {
-            return callback(null);
-        }
-        
-        character.getCharacterStatByFactions().then(function (characterFactionStats) {
-            if (characterFactionStats && characterFactionStats.length > 0) {
-                var results = characterFactionStats.map(function (d) {
-                    return d.toJSON();
-                });
-                return callback(null, results);
-            }
-            
-            updateCharacterFactionStatsById(characterId, null, callback);
-        }).catch(function (error) {
-            callback(error);
-        });
-    });
-};
-
-module.exports.getCharacterWeaponStatsById = function (characterId, callback) {
-    getCharacterById(characterId, function (error, character) {
-        if (error) {
-            return callback(error);
-        }
-        
-        if (!character) {
-            return callback(null);
-        }
-        
-        character.getCharacterWeaponStats().then(function (weaponStats) {
-            if (weaponStats && weaponStats.length > 0) {
-                var results = weaponStats.map(function (d) {
-                    return d.toJSON();
-                });
-                return callback(null, results);
-            }
-            
-            updateCharacterWeaponStatsById(characterId, null, callback);
-        }).catch(function (error) {
-            callback(error);
-        });
-    });
-};
-
-module.exports.getCharacterWeaponFactionStatsById = function (characterId, callback) {
-    getCharacterById(characterId, function (error, character) {
-        if (error) {
-            return callback(error);
-        }
-        
-        if (!character) {
-            return callback(null);
-        }
-        
-        character.getCharacterWeaponStatByFactions().then(function (weaponStats) {
-            if (weaponStats && weaponStats.length > 0) {
-                var results = weaponStats.map(function (d) {
-                    return d.toJSON();
-                });
-                return callback(null, results);
-            }
-            
-            updateCharacterWeaponFactionStatsById(characterId, null, callback);
-        }).catch(function (error) {
-            callback(error);
-        });
-    });
-};
-
-module.exports.getCharacterOutfitMembershipById = function (characterId, callback) {
-    getCharacterById(characterId, function (error, character) {
-        if (error) {
-            return callback(error);
-        }
-        
-        if (!character) {
-            return callback(null);
-        }
-        
-        character.getOutfitMember().then(function (outfitMember) {
-            if (outfitMember) {
-                return callback(null, outfitMember.toJSON());
-            }
-            
-            updateCharacterOutfitMembershipById(characterId, callback);
-        }).catch(function (error) {
-            callback(error);
-        });
-    });
-};
-
 module.exports.getCharacterFullById = function (characterId, callback) {
     getCharacterFullById(characterId, function (error, data) {
         if (error) {
@@ -192,6 +70,32 @@ module.exports.findCharacters = function (characterIds, callback) {
         callback(null, jsonData);
     }).catch(function (error) {
         callback(error);
+    });
+};
+
+module.exports.getCharactersOutfit = function (characterId, callback) {
+    var cacheKey = 'charactersOutfit:' + characterId;
+    
+    redis.get(cacheKey, function (error, data) {
+        if (data) {
+            if (data === 'null' || data === 'EMPTY') {
+                return callback(null, null);
+            } else {
+                var jData = JSON.parse(data);
+                return callback(null, jData);
+            }
+        }
+
+        updateCharacterOutfitMembershipById(characterId, function (error, outfitMembership) {
+            if (error) {
+                return callback(error);
+            }
+            
+            redis.set(cacheKey, outfitMembership ? JSON.stringify(outfitMembership) : 'null');
+            redis.expire(cacheKey, 900);
+
+            callback(null, outfitMembership);
+        });
     });
 };
 
@@ -527,7 +431,7 @@ function updateCharacterOutfitMembershipById(characterId, callback) {
                 rankOrdinal: data.rank_ordinal,
             }).then(function () {
                 db.OutfitMember.findById(characterId).then(function (outfitMember) {
-                    callback(null, outfitMember);
+                    callback(null, outfitMember ? outfitMember.toJSON() : null);
                 }).catch(function (error) {
                     callback(error);
                 });

@@ -115,6 +115,25 @@ module.exports.updateOutfitById = function (outfitId, callback) {
     updateOutfitById(outfitId, callback);
 };
 
+module.exports.findOutfits = function (outfitIds, callback) {
+    var options = {
+        where: {
+            id: outfitIds
+        },
+        attributes: ['id', 'name', 'alias', 'factionId']
+    };
+    
+    db.Outfit.findAll(options).then(function (outfits) {
+        var jsonData = outfits.map(function (d) {
+            return d.toJSON();
+        });
+        
+        callback(null, jsonData);
+    }).catch(function (error) {
+        callback(error);
+    });
+};
+
 function createDateAsUTC(date) {
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
 }
@@ -163,13 +182,17 @@ function updateOutfitById(outfitId, callback) {
             return callback(error);
         }
         
-        if (data === undefined) {
-            return callback(null);
+        if (!data) {
+            return callback('No Outfit found with this id');
         }
         
-        characterService.getCharacterById(data.leader_character_id, function (error, leaderCharacter) {
-            if (error || !leaderCharacter) {
+        census.character.getCharacter(data.leader_character_id, function (error, leaderCharacter) {
+            if (error) {
                 return callback(error);
+            }
+            
+            if (!leaderCharacter) {
+                return callback('Outfit leader could not be resolved');
             }
 
             db.Outfit.upsert({
