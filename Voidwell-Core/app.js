@@ -73,8 +73,13 @@ app.post('/:service/:method', function (req, res, next) {
         
         res.json(data);
     };
-            
-    services[service][method](...encodedArgs, callback);
+    
+    try {
+        services[service][method](...encodedArgs, callback);
+    } catch(ex) {
+        console.log(['Voidwell-Core]', ex);
+        next(ex);
+    }
 });
 
 app.listen(config.port, function () {
