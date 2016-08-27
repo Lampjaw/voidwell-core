@@ -1,9 +1,7 @@
 ﻿var async = require('async');
 
 var census = require('./../census');
-var db = require('./../models').models;
-
-var characterService = require('./character');
+var db = require('./../database');
 
 module.exports.lookupOutfitsByName = function (name, limit, callback) {
     var findParams = {

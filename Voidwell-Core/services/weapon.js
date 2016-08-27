@@ -1,7 +1,5 @@
-﻿var sequelize = require('sequelize');
-
-var census = require('./../census');
-var db = require('./../models').models;
+﻿var census = require('./../census');
+var db = require('./../database');
 
 module.exports.getWeaponInfo = function (id, callback) {
     census.item.getWeaponInfo(id, function (error, data) {

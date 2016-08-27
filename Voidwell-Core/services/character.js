@@ -2,7 +2,7 @@
 
 var redis = require('./../rediscache');
 var census = require('./../census');
-var db = require('./../models').models;
+var db = require('./../database');
 var outfitService = require('./outfit');
 
 module.exports.lookupCharactersByName = function (query, limit, callback) {

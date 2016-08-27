@@ -1,7 +1,7 @@
 ﻿var async = require('async');
 
 var census = require('./../census');
-var db = require('./../models').models;
+var db = require('./../database');
 
 var updateDelay = 1000 * 60 * 60 * 24 * 7;
 var updateTimeout;

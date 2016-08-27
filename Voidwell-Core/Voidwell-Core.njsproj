@@ -46,32 +46,42 @@
     <Compile Include="config.js">
       <Publish>True</Publish>
     </Compile>
-    <Compile Include="models\CharacterTime.js" />
-    <Compile Include="models\FacilityLink.js" />
-    <Compile Include="models\Faction.js" />
-    <Compile Include="models\Item.js" />
-    <Compile Include="models\ItemCategory.js" />
-    <Compile Include="models\MapHex.js" />
-    <Compile Include="models\MapRegion.js" />
-    <Compile Include="models\Outfit.js" />
-    <Compile Include="models\OutfitMember.js" />
-    <Compile Include="models\Profile.js" />
-    <Compile Include="models\Title.js" />
-    <Compile Include="models\UpdateHistory.js" />
-    <Compile Include="models\VehicleFaction.js" />
-    <Compile Include="models\Vehicle.js" />
-    <Compile Include="models\World.js" />
-    <Compile Include="models\Zone.js" />
+    <Compile Include="controllers\character.js" />
+    <Compile Include="controllers\item.js" />
+    <Compile Include="controllers\map.js" />
+    <Compile Include="controllers\outfit.js" />
+    <Compile Include="controllers\profile.js" />
+    <Compile Include="controllers\vehicle.js" />
+    <Compile Include="controllers\weapon.js" />
+    <Compile Include="controllers\world.js" />
+    <Compile Include="controllers\zone.js" />
+    <Compile Include="logger.js" />
+    <Compile Include="database\models\CharacterTime.js" />
+    <Compile Include="database\models\FacilityLink.js" />
+    <Compile Include="database\models\Faction.js" />
+    <Compile Include="database\models\Item.js" />
+    <Compile Include="database\models\ItemCategory.js" />
+    <Compile Include="database\models\MapHex.js" />
+    <Compile Include="database\models\MapRegion.js" />
+    <Compile Include="database\models\Outfit.js" />
+    <Compile Include="database\models\OutfitMember.js" />
+    <Compile Include="database\models\Profile.js" />
+    <Compile Include="database\models\Title.js" />
+    <Compile Include="database\models\UpdateHistory.js" />
+    <Compile Include="database\models\VehicleFaction.js" />
+    <Compile Include="database\models\Vehicle.js" />
+    <Compile Include="database\models\World.js" />
+    <Compile Include="database\models\Zone.js" />
     <Compile Include="app.js" />
     <Compile Include="census\index.js" />
     <Compile Include="census\services\character.js" />
-    <Compile Include="models\index.js" />
-    <Compile Include="models\CharacterIviStat.js" />
-    <Compile Include="models\Character.js" />
-    <Compile Include="models\CharacterWeaponStatByFaction.js" />
-    <Compile Include="models\CharacterWeaponStat.js" />
-    <Compile Include="models\CharacterStatByFaction.js" />
-    <Compile Include="models\CharacterStat.js" />
+    <Compile Include="database\index.js" />
+    <Compile Include="database\models\CharacterIviStat.js" />
+    <Compile Include="database\models\Character.js" />
+    <Compile Include="database\models\CharacterWeaponStatByFaction.js" />
+    <Compile Include="database\models\CharacterWeaponStat.js" />
+    <Compile Include="database\models\CharacterStatByFaction.js" />
+    <Compile Include="database\models\CharacterStat.js" />
     <Compile Include="rediscache.js" />
     <Compile Include="services\character.js" />
     <Compile Include="services\faction.js" />
@@ -88,8 +98,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="census\services\" />
-    <Folder Include="models\" />
+    <Folder Include="database\" />
     <Folder Include="census\" />
+    <Folder Include="database\models\" />
+    <Folder Include="controllers\" />
     <Folder Include="services\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

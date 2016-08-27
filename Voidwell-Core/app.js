@@ -2,25 +2,13 @@
 var bodyParser = require('body-parser');
 var requireDir = require('require-dir');
 
-var db = require('./models');
+var logger = require('./logger')('VoidwellCoreHTTP');
 var config = require('./config');
+
+require('./database');
 require('./rediscache');
 
-db.init(config.schema, config.username, config.password, config.host, function (error) {
-    if (error) {
-        return console.log(error);
-    }
-    console.log('[SERVER] Voidwell-Core initialized');
-});
-
-var services = {};
-
-var serviceRoutes = requireDir('./services');
-if (serviceRoutes) {
-    Object.keys(serviceRoutes).forEach(function (route) {
-        services[route] = require('./services/' + route);
-    });
-}
+var controllers = requireDir('./controllers');
 
 var app = express();
 
@@ -28,19 +16,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: '*/*' }));
 
 app.use(function (req, res, next) {
+    logger.debug(req.method, req.url);
+    next();
+});
+
+app.use(function (req, res, next) {
     req.start = new Date();
     res._json = res.json;
     
-    res.json = function (data, isError) {
+    res.json = function (result) {
         var response = {};
         
-        if (isError) {
+        if (result instanceof Error) {
             response.success = false;
-            response.message = data;
+            response.message = result;
         } else {
             response.success = true;
-            if (data !== undefined) {
-                response.data = data;
+            if (result !== undefined) {
+                response.data = result;
             }
         }
         
@@ -52,8 +45,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.post('/:service/:method', function (req, res, next) {
-    var service = req.params.service;
+app.post('/:controller/:method', function (req, res, next) {
+    var controller = req.params.controller;
     var method = req.params.method;
     var args = req.body.args || [];
     
@@ -65,23 +58,15 @@ app.post('/:service/:method', function (req, res, next) {
             encodedArgs.push(arg);
         }
     });
-    
-    var callback = function (error, data) {
-        if (error) {
-            return next(error);
-        }
         
-        res.json(data);
-    };
-    
     try {
-        services[service][method](...encodedArgs, callback);
+        controllers[controller][method](...encodedArgs, req, res, next);
     } catch(ex) {
-        console.log(['Voidwell-Core]', ex);
-        next(ex);
+        logger.log(ex);
+        res.json(new Error('Critical failure in controller: ' + controller + '-' + method));
     }
 });
 
 app.listen(config.port, function () {
-    console.log('[SERVER] Listening on port ' + config.port);
+    logger.log('Listening on port ' + config.port);
 });
