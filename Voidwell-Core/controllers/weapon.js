@@ -11,7 +11,7 @@ module.exports.getWeaponInfo = function (id, req, res, next) {
 };
 
 module.exports.getLeaderboard = function (id, sortCol, sortDirection, rowStart, limit, req, res, next) {
-    weaponService.getWeaponInfo(id, function (error, response) {
+    weaponService.getLeaderboard(id, sortCol, sortDirection, rowStart, limit, function (error, response) {
         if (error) {
             return res.json(new Error('Could not retrieve weapon leaderboard'));
         }

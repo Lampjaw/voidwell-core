@@ -7,7 +7,7 @@ var Sequelize = require('sequelize');
 var logger = require('./../logger')('VoidwellCore');
 var config = require('./../config').database;
 
-var modelPath = __dirname + '\\models';
+var modelPath = __dirname + '/models';
 var db = {};
 
 var sequelize = new Sequelize(config.schema, config.username, config.password, {
