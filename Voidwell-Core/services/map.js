@@ -28,7 +28,7 @@ module.exports.getMapOwnership = function (worldId, zoneId, callback) {
         }
         
         if (!data || !data.Regions) {
-            console.log(data);
+            console.log(worldId, zoneId, data);
             return callback('No Ownership data found!');
         }
         
