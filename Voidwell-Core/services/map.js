@@ -27,6 +27,11 @@ module.exports.getMapOwnership = function (worldId, zoneId, callback) {
             return callback(error);
         }
         
+        if (!data || !data.Regions) {
+            console.log(data);
+            return callback('No Ownership data found!');
+        }
+        
         var map = data.Regions.Row.map(function (r) {
             return {
                 regionId: Number(r.RowData.RegionId),
