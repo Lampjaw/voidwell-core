@@ -52,12 +52,14 @@ var censusBase = {
         censusBase.fetchData(query, true, postFn);
     },
     convertDate: function (date) {
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var hour = date.getHours();
-        var minute = date.getMinutes();
-        var seconds = date.getSeconds();
+        var source = new Date(date);
+        
+        var year = source.getFullYear();
+        var month = source.getMonth() + 1;
+        var day = source.getDate();
+        var hour = source.getHours();
+        var minute = source.getMinutes();
+        var seconds = source.getSeconds();
         
         return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + seconds;
     }
